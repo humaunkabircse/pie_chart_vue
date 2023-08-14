@@ -54,7 +54,7 @@ onBeforeUnmount(() => {
   <div class="mt-20">
     <input type="text" v-model="newItem">
     <button @click="updateChart()" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      Add
+      Add New Task
     </button>
 
   </div>
