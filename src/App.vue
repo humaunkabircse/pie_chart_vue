@@ -1,47 +1,69 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+const newItem = ref(16)
+
+let chart = null
+
+const dataset = [
+  200, 150, 100
+]
+
+const data = {
+  labels: [
+    'Red',
+    'Green',
+    'Blue'
+  ],
+  datasets: [{
+    label: 'My Task',
+    data: dataset,
+    backgroundColor: [
+      'rgb(226, 0, 0)',
+      'rgb(0, 155, 28)',
+      'rgb(1, 122, 255)',
+      'rgb(43, 105, 86)',
+      'rgb(21, 21, 186)',
+    ],
+    hoverOffset: 4
+  }]
+};
+
+const config = {
+  type: 'pie',
+  data: data,
+};
+
+onMounted(() => {
+  const ctx = document.getElementById('chart')
+  chart = new Chart(ctx, config)
+})
+
+function updateChart() {
+  dataset.push(newItem.value)
+  chart.data.datasets[0].data = dataset
+  chart.update()
+}
+
+onBeforeUnmount(() => {
+  chart.destroy()
+})
+
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <div class=" mx-auto w-[400px] h-[400px] bg-gray-400">
+    <canvas id="chart">
+    </canvas>
+  </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+  <div class="mt-20">
+    <input type="text" v-model="newItem">
+    <button @click="updateChart()" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Add
+    </button>
 
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
