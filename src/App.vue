@@ -1,19 +1,13 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-const newItem = ref(16)
 
+const newItem = ref(16)
 let chart = null
 
-const dataset = [
-  200, 150, 100
-]
+const dataset = [ 200, 150, 100 ]
 
 const data = {
-  labels: [
-    'Red',
-    'Green',
-    'Blue'
-  ],
+  labels: ['Red','Green','Blue'],
   datasets: [{
     label: 'My Task',
     data: dataset,
